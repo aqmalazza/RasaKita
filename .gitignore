@@ -3,11 +3,15 @@ dist/
 .codex-run/
 
 # Local planning and instruction docs
+*.md
 DESIGN.md
 FlowKasir.md
 FlowPelanggan.md
 FolderStruktur.md
 Intruksi.md
+
+# Unused large source placeholder
+public/images/menu/placeholder.png
 
 # Secrets and credentials
 .env

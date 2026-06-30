@@ -31,6 +31,10 @@ export default function MenuPage() {
   );
 
   useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") {
+      return undefined;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         const visibleEntry = entries

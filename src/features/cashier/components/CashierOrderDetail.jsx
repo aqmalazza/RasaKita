@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Modal from "../../../components/common/Modal.jsx";
 import StatusBadge from "../../../components/feedback/StatusBadge.jsx";
 import { formatCurrency } from "../../../lib/formatCurrency.js";
@@ -17,51 +18,62 @@ export default function CashierOrderDetail({
   onReject,
   order,
 }) {
-  if (!order) {
+  const [visibleOrder, setVisibleOrder] = useState(order);
+
+  useEffect(() => {
+    if (order) {
+      setVisibleOrder(order);
+    }
+  }, [order]);
+
+  if (!visibleOrder) {
     return null;
   }
+
+  const activeOrder = order ?? visibleOrder;
 
   return (
     <Modal
       footer={
         <CashierActionButtons
-          onAccept={() => onAccept(order)}
-          onReject={() => onReject(order)}
-          status={order.orderStatus}
+          onAccept={() => onAccept(activeOrder)}
+          onReject={() => onReject(activeOrder)}
+          status={activeOrder.orderStatus}
         />
       }
       isOpen={Boolean(order)}
+      onExited={() => setVisibleOrder(null)}
       onClose={onClose}
       title="Detail pesanan"
       variant="center"
     >
       <div className="detail-stack">
         <div className="summary-stack">
-          <span className="status-panel__id">{order.id}</span>
-          <StatusBadge status={order.orderStatus} />
+          <span className="status-panel__id">{activeOrder.id}</span>
+          <StatusBadge status={activeOrder.orderStatus} />
           <div className="summary-row">
             <span>Nama pelanggan</span>
-            <strong>{order.customerName}</strong>
+            <strong>{activeOrder.customerName}</strong>
           </div>
           <div className="summary-row">
             <span>Nomor meja</span>
-            <strong>{order.tableNumber}</strong>
+            <strong>{activeOrder.tableNumber}</strong>
           </div>
           <div className="summary-row">
             <span>Waktu pesanan</span>
-            <strong>{formatDateTime(order.createdAt)}</strong>
+            <strong>{formatDateTime(activeOrder.createdAt)}</strong>
           </div>
           <div className="summary-row">
             <span>Status pembayaran</span>
             <strong>
-              {PAYMENT_STATUS_LABEL[order.paymentStatus] ??
+              {PAYMENT_STATUS_LABEL[activeOrder.paymentStatus] ??
                 "Pembayaran Terkonfirmasi"}
             </strong>
           </div>
         </div>
         <div className="summary-divider" />
         <div className="order-detail-list">
-          {order.items.map((item) => (
+          {activeOrder.items.map((item) => (
             <div className="order-detail-item" key={item.id}>
               <div className="order-line">
                 <strong>{item.name}</strong>
@@ -76,11 +88,11 @@ export default function CashierOrderDetail({
         <div className="summary-divider" />
         <div className="summary-row">
           <span>Total item</span>
-          <strong>{order.totalItems}</strong>
+          <strong>{activeOrder.totalItems}</strong>
         </div>
         <div className="summary-row">
           <span>Total harga</span>
-          <strong>{formatCurrency(order.totalPrice)}</strong>
+          <strong>{formatCurrency(activeOrder.totalPrice)}</strong>
         </div>
       </div>
     </Modal>

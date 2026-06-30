@@ -22,10 +22,15 @@ export default function Modal({
     title,
   });
   const onCloseRef = useRef(onClose);
+  const onExitedRef = useRef(onExited);
 
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
+
+  useEffect(() => {
+    onExitedRef.current = onExited;
+  }, [onExited]);
 
   useEffect(() => {
     if (isOpen) {
@@ -53,13 +58,13 @@ export default function Modal({
     setIsVisible(false);
     exitTimer = window.setTimeout(() => {
       setShouldRender(false);
-      onExited?.();
+      onExitedRef.current?.();
     }, MODAL_TRANSITION_MS);
 
     return () => {
       window.clearTimeout(exitTimer);
     };
-  }, [isOpen, onExited, shouldRender]);
+  }, [isOpen, shouldRender]);
 
   useEffect(() => {
     if (!shouldRender) {
@@ -113,7 +118,7 @@ export default function Modal({
         .filter(Boolean)
         .join(" ")}
       role="presentation"
-      onMouseDown={onClose}
+      onMouseDown={() => onCloseRef.current?.()}
     >
       <section
         aria-modal="true"
@@ -132,7 +137,7 @@ export default function Modal({
           <Button
             aria-label="Tutup pop-up"
             className="button--icon"
-            onClick={onClose}
+            onClick={() => onCloseRef.current?.()}
             variant="ghost"
           >
             <X size={18} />

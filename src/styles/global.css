@@ -958,8 +958,14 @@ img {
   text-align: left;
 }
 
-.cashier-card:hover {
-  box-shadow: var(--shadow-2);
+@media (hover: hover) {
+  .cashier-card {
+    transition: box-shadow 160ms ease;
+  }
+
+  .cashier-card:hover {
+    box-shadow: var(--shadow-2);
+  }
 }
 
 .cashier-card__meta {
