@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import Modal from "../../../components/common/Modal.jsx";
+import Toast from "../../../components/feedback/Toast.jsx";
 import { brandData } from "../../../data/brandData.js";
 import { categoryData } from "../../../data/categoryData.js";
 import { menuData } from "../../../data/menuData.js";
@@ -89,6 +89,7 @@ export default function MenuPage() {
 
     setNotice({
       title: isAdded ? "Menu ditambahkan" : "Menu tidak tersedia",
+      variant: isAdded ? "success" : "danger",
       message: isAdded
         ? `${quantity} ${menu.name} masuk ke keranjang.`
         : `${menu.name} sedang tidak bisa dipesan.`,
@@ -114,15 +115,13 @@ export default function MenuPage() {
         onAdd={handleAdd}
         onClose={() => setSelectedMenu(null)}
       />
-      <Modal
-        footer={null}
+      <Toast
         isOpen={Boolean(notice)}
+        message={notice?.message}
         onClose={() => setNotice(null)}
         title={notice?.title ?? ""}
-        variant="center"
-      >
-        <p>{notice?.message}</p>
-      </Modal>
+        variant={notice?.variant}
+      />
       <FloatingCartButton totalItems={totalItems} totalPrice={totalPrice} />
     </div>
   );
