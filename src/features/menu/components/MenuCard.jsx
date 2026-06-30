@@ -1,5 +1,6 @@
 import { ShoppingCart } from "lucide-react";
 import Button from "../../../components/common/Button.jsx";
+import OptimizedImage from "../../../components/common/OptimizedImage.jsx";
 import { DEFAULT_MENU_IMAGE } from "../../../data/menuData.js";
 import { formatCurrency } from "../../../lib/formatCurrency.js";
 
@@ -11,12 +12,13 @@ export default function MenuCard({ menu, onAdd, onSelect }) {
         onClick={() => onSelect(menu)}
         type="button"
       >
-        <img
+        <OptimizedImage
           alt={menu.name}
-          onError={(event) => {
-            event.currentTarget.src = menu.fallbackImage || DEFAULT_MENU_IMAGE;
-          }}
-          src={menu.image || menu.fallbackImage || DEFAULT_MENU_IMAGE}
+          fallbackSrc={menu.fallbackImage || DEFAULT_MENU_IMAGE}
+          height={140}
+          loading="lazy"
+          src={menu.optimizedImage || menu.image}
+          width={112}
         />
         {!menu.isAvailable ? (
           <span className="menu-card__unavailable">Tidak tersedia</span>

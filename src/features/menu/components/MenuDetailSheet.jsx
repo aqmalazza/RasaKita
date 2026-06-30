@@ -2,6 +2,7 @@ import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import Button from "../../../components/common/Button.jsx";
 import Modal from "../../../components/common/Modal.jsx";
+import OptimizedImage from "../../../components/common/OptimizedImage.jsx";
 import QuantityControl from "../../../components/common/QuantityControl.jsx";
 import { DEFAULT_MENU_IMAGE } from "../../../data/menuData.js";
 import { formatCurrency } from "../../../lib/formatCurrency.js";
@@ -44,13 +45,13 @@ export default function MenuDetailSheet({ menu, onAdd, onClose }) {
     >
       <div className="detail-stack">
         <div className="sheet-image">
-          <img
+          <OptimizedImage
             alt={menu.name}
-            onError={(event) => {
-              event.currentTarget.src =
-                menu.fallbackImage || DEFAULT_MENU_IMAGE;
-            }}
-            src={menu.image || menu.fallbackImage || DEFAULT_MENU_IMAGE}
+            fallbackSrc={menu.fallbackImage || DEFAULT_MENU_IMAGE}
+            height={500}
+            loading="lazy"
+            src={menu.optimizedImage || menu.image}
+            width={800}
           />
         </div>
         <div className="summary-stack">

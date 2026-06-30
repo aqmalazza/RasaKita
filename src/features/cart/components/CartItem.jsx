@@ -1,5 +1,6 @@
 import { Trash2 } from "lucide-react";
 import Button from "../../../components/common/Button.jsx";
+import OptimizedImage from "../../../components/common/OptimizedImage.jsx";
 import QuantityControl from "../../../components/common/QuantityControl.jsx";
 import { DEFAULT_MENU_IMAGE } from "../../../data/menuData.js";
 import { formatCurrency } from "../../../lib/formatCurrency.js";
@@ -7,12 +8,13 @@ import { formatCurrency } from "../../../lib/formatCurrency.js";
 export default function CartItem({ item, onDecrease, onIncrease, onRemove }) {
   return (
     <article className="cart-item">
-      <img
+      <OptimizedImage
         alt={item.name}
-        onError={(event) => {
-          event.currentTarget.src = item.fallbackImage || DEFAULT_MENU_IMAGE;
-        }}
-        src={item.image || item.fallbackImage || DEFAULT_MENU_IMAGE}
+        fallbackSrc={item.fallbackImage || DEFAULT_MENU_IMAGE}
+        height={72}
+        loading="lazy"
+        src={item.optimizedImage || item.image}
+        width={72}
       />
       <div className="cart-item__body">
         <div className="cart-item__title-row">
