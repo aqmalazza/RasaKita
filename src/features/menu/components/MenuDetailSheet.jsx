@@ -47,13 +47,15 @@ export default function MenuDetailSheet({ menu, onAdd, onClose }) {
           <img
             alt={menu.name}
             onError={(event) => {
-              event.currentTarget.src = DEFAULT_MENU_IMAGE;
+              event.currentTarget.src =
+                menu.fallbackImage || DEFAULT_MENU_IMAGE;
             }}
-            src={menu.image || DEFAULT_MENU_IMAGE}
+            src={menu.image || menu.fallbackImage || DEFAULT_MENU_IMAGE}
           />
         </div>
         <div className="summary-stack">
           <p>{menu.description}</p>
+          {menu.note ? <p>{menu.note}</p> : null}
           <strong className="price-text">{formatCurrency(menu.price)}</strong>
           {!menu.isAvailable ? (
             <span className="status-badge status-badge--rejected">

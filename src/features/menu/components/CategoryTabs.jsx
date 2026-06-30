@@ -15,7 +15,7 @@ export default function CategoryTabs({ activeCategory, categories, onChange }) {
           role="tab"
           type="button"
         >
-          {category.label}
+          {category.name ?? category.label}
         </button>
       ))}
     </div>

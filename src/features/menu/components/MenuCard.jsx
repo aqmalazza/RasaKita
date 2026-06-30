@@ -14,9 +14,9 @@ export default function MenuCard({ menu, onAdd, onSelect }) {
         <img
           alt={menu.name}
           onError={(event) => {
-            event.currentTarget.src = DEFAULT_MENU_IMAGE;
+            event.currentTarget.src = menu.fallbackImage || DEFAULT_MENU_IMAGE;
           }}
-          src={menu.image || DEFAULT_MENU_IMAGE}
+          src={menu.image || menu.fallbackImage || DEFAULT_MENU_IMAGE}
         />
         {!menu.isAvailable ? (
           <span className="menu-card__unavailable">Habis</span>
@@ -30,6 +30,7 @@ export default function MenuCard({ menu, onAdd, onSelect }) {
         >
           <h2>{menu.name}</h2>
           <p>{menu.description}</p>
+          {menu.note ? <p>{menu.note}</p> : null}
         </button>
         <div className="menu-card__price-row">
           <span className="price-text">{formatCurrency(menu.price)}</span>

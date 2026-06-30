@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import Modal from "../../../components/common/Modal.jsx";
 import PageHeader from "../../../components/common/PageHeader.jsx";
+import { brandData } from "../../../data/brandData.js";
 import { categoryData } from "../../../data/categoryData.js";
 import { menuData } from "../../../data/menuData.js";
 import FloatingCartButton from "../../cart/components/FloatingCartButton.jsx";
@@ -14,13 +15,23 @@ export default function MenuPage() {
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [notice, setNotice] = useState(null);
   const { addItem, totalItems, totalPrice } = useCart();
+  const categoryTabs = useMemo(
+    () => [{ id: "all", name: "Semua" }, ...categoryData],
+    []
+  );
 
   const filteredMenus = useMemo(() => {
     if (activeCategory === "all") {
       return menuData;
     }
 
-    return menuData.filter((menu) => menu.category === activeCategory);
+    const selectedCategory = categoryData.find(
+      (category) => category.id === activeCategory
+    );
+
+    return menuData.filter(
+      (menu) => menu.category === selectedCategory?.name
+    );
   }, [activeCategory]);
 
   const handleAdd = (menu, quantity = 1) => {
@@ -37,12 +48,12 @@ export default function MenuPage() {
   return (
     <div className="page-stack">
       <PageHeader
-        description="Pilih menu, atur jumlah, lalu lanjutkan ke keranjang."
-        title="Pesanan Ilkom 25"
+        description={brandData.tagline}
+        title={brandData.name}
       />
       <CategoryTabs
         activeCategory={activeCategory}
-        categories={categoryData}
+        categories={categoryTabs}
         onChange={setActiveCategory}
       />
       <MenuGrid

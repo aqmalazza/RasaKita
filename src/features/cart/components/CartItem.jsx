@@ -10,9 +10,9 @@ export default function CartItem({ item, onDecrease, onIncrease, onRemove }) {
       <img
         alt={item.name}
         onError={(event) => {
-          event.currentTarget.src = DEFAULT_MENU_IMAGE;
+          event.currentTarget.src = item.fallbackImage || DEFAULT_MENU_IMAGE;
         }}
-        src={item.image || DEFAULT_MENU_IMAGE}
+        src={item.image || item.fallbackImage || DEFAULT_MENU_IMAGE}
       />
       <div className="cart-item__body">
         <div className="cart-item__title-row">

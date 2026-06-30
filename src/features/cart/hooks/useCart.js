@@ -11,7 +11,9 @@ function normalizeCartItem(menuItem, quantity) {
     category: menuItem.category,
     price: menuItem.price,
     image: menuItem.image,
+    fallbackImage: menuItem.fallbackImage,
     description: menuItem.description,
+    note: menuItem.note,
     quantity,
   };
 }
