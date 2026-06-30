@@ -544,17 +544,23 @@ img {
   display: grid;
   place-items: end center;
   padding: var(--space-2);
+  overflow: hidden;
   background: rgba(0, 0, 0, 0.38);
+  overscroll-behavior: contain;
 }
 
 .modal {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   width: min(100%, 520px);
   max-height: calc(100vh - 32px);
-  overflow: auto;
+  max-height: calc(100dvh - 32px);
+  overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   box-shadow: var(--shadow-3);
+  overscroll-behavior: contain;
 }
 
 .modal--center {
@@ -578,7 +584,11 @@ img {
 }
 
 .modal__body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--space-2);
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal__footer {
