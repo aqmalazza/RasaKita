@@ -25,9 +25,13 @@ function validateForm(form) {
 export default function OrderInfoPage() {
   const navigate = useNavigate();
   const { items, totalItems, totalPrice } = useCart();
-  const [form, setForm] = useState({
-    customerName: "",
-    tableNumber: "",
+  const [form, setForm] = useState(() => {
+    const checkoutDraft = orderStorage.getCheckoutDraft();
+
+    return {
+      customerName: checkoutDraft?.customerName ?? "",
+      tableNumber: checkoutDraft?.tableNumber ?? "",
+    };
   });
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
@@ -35,7 +39,11 @@ export default function OrderInfoPage() {
   const isValid = !errors.customerName && !errors.tableNumber && items.length > 0;
 
   const handleChange = (field, value) => {
-    setForm((currentForm) => ({ ...currentForm, [field]: value }));
+    setForm((currentForm) => {
+      const nextForm = { ...currentForm, [field]: value };
+      orderStorage.saveCheckoutDraft(nextForm);
+      return nextForm;
+    });
   };
 
   const handleSubmit = (event) => {

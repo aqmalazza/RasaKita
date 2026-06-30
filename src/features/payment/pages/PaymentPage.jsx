@@ -17,6 +17,9 @@ export default function PaymentPage() {
   const [selectedMethod, setSelectedMethod] = useState(paymentData[0].id);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const checkoutDraft = orderStorage.getCheckoutDraft();
+  const hasCheckoutDraft =
+    Boolean(checkoutDraft?.customerName?.trim()) &&
+    Boolean(checkoutDraft?.tableNumber?.trim());
   const selectedPaymentMethod = paymentData.find(
     (method) => method.id === selectedMethod
   );
@@ -25,7 +28,7 @@ export default function PaymentPage() {
     return <Navigate replace to="/cart" />;
   }
 
-  if (!checkoutDraft) {
+  if (!hasCheckoutDraft) {
     return <Navigate replace to="/order-info" />;
   }
 

@@ -5,11 +5,18 @@ import { router } from "./router.jsx";
 
 export default function App() {
   useEffect(() => {
+    const isMenuPage = () => window.location.pathname === "/";
+
     const clearOrderDataOnExit = () => {
-      orderStorage.clearSessionData();
+      if (isMenuPage()) {
+        orderStorage.clearSessionData();
+      }
     };
 
-    orderStorage.clearSessionData();
+    if (isMenuPage()) {
+      orderStorage.clearSessionData();
+    }
+
     window.addEventListener("beforeunload", clearOrderDataOnExit);
     window.addEventListener("pagehide", clearOrderDataOnExit);
 

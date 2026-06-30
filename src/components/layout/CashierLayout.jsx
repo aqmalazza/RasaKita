@@ -1,11 +1,13 @@
 import { MonitorCheck } from "lucide-react";
 import { Link, Outlet } from "react-router-dom";
 import OptimizedImage from "../common/OptimizedImage.jsx";
+import RouteScrollReset from "../common/RouteScrollReset.jsx";
 import { brandData } from "../../data/brandData.js";
 
 export default function CashierLayout() {
   return (
     <div className="cashier-shell">
+      <RouteScrollReset />
       <header className="cashier-topbar">
         <div className="cashier-topbar__inner">
           <div className="cashier-brand">
