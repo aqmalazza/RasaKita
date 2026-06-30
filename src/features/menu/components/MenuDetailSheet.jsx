@@ -59,7 +59,7 @@ export default function MenuDetailSheet({ menu, onAdd, onClose }) {
           <strong className="price-text">{formatCurrency(menu.price)}</strong>
           {!menu.isAvailable ? (
             <span className="status-badge status-badge--rejected">
-              Menu sedang habis
+              Tidak tersedia
             </span>
           ) : null}
         </div>

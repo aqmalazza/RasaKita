@@ -19,7 +19,7 @@ export default function MenuCard({ menu, onAdd, onSelect }) {
           src={menu.image || menu.fallbackImage || DEFAULT_MENU_IMAGE}
         />
         {!menu.isAvailable ? (
-          <span className="menu-card__unavailable">Habis</span>
+          <span className="menu-card__unavailable">Tidak tersedia</span>
         ) : null}
       </button>
       <div className="menu-card__body">
