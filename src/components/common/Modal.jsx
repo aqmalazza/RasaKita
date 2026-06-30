@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Button from "./Button.jsx";
 
 const MODAL_TRANSITION_MS = 180;
@@ -95,7 +96,7 @@ export default function Modal({
     };
   }, [shouldRender]);
 
-  if (!shouldRender) {
+  if (!shouldRender || typeof document === "undefined") {
     return null;
   }
 
@@ -103,7 +104,7 @@ export default function Modal({
     ? { children, footer, title }
     : contentSnapshot;
 
-  return (
+  return createPortal(
     <div
       className={[
         "modal-backdrop",
@@ -142,6 +143,7 @@ export default function Modal({
           <footer className="modal__footer">{displayedContent.footer}</footer>
         ) : null}
       </section>
-    </div>
+    </div>,
+    document.body
   );
 }

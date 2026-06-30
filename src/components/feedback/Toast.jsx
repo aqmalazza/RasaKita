@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const TOAST_TRANSITION_MS = 180;
 
@@ -70,7 +71,7 @@ export default function Toast({
     };
   }, [duration, isOpen, message, title]);
 
-  if (!shouldRender) {
+  if (!shouldRender || typeof document === "undefined") {
     return null;
   }
 
@@ -78,7 +79,7 @@ export default function Toast({
     ? { message, title, variant }
     : contentSnapshot;
 
-  return (
+  return createPortal(
     <div className="toast-viewport" aria-atomic="true" aria-live="polite">
       <div
         className={[
@@ -95,6 +96,7 @@ export default function Toast({
           <span>{displayedContent.message}</span>
         ) : null}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
