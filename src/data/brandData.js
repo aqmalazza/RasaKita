@@ -7,6 +7,8 @@ export const brandData = {
   instagram: "@rasakita.id",
   logo: "/images/brand/logo.png",
   optimizedLogo: "/images/optimized/brand/logo.webp",
+  headerImage: "/images/brand/HeaderFootage.png",
+  optimizedHeaderImage: "/images/optimized/brand/HeaderFootage.webp",
   values: [
     {
       title: "Bahan Segar",

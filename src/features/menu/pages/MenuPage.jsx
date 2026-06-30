@@ -9,6 +9,7 @@ import { useCart } from "../../cart/hooks/useCart.js";
 import CategoryTabs from "../components/CategoryTabs.jsx";
 import MenuDetailSheet from "../components/MenuDetailSheet.jsx";
 import MenuGrid from "../components/MenuGrid.jsx";
+import MenuHero from "../components/MenuHero.jsx";
 
 export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -97,6 +98,7 @@ export default function MenuPage() {
 
   return (
     <div className="page-stack">
+      <MenuHero brand={brandData} />
       <PageHeader
         description={brandData.tagline}
         title={brandData.name}
