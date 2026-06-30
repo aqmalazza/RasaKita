@@ -1,0 +1,45 @@
+node_modules/
+dist/
+.codex-run/
+.agents/
+.codex/
+
+# Local planning and instruction docs
+DESIGN.md
+FlowKasir.md
+FlowPelanggan.md
+FolderStruktur.md
+Intruksi.md
+*.md
+
+# Unused large source placeholder
+public/images/menu/placeholder.png
+
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.local
+*.key
+*.pem
+*.p8
+*.p12
+*.pfx
+*.crt
+*.cer
+*.jks
+*.keystore
+*.secret
+*.secrets
+credentials/
+secrets/
+secret/
+service-account*.json
+firebase-adminsdk*.json
+.npmrc
+.yarnrc.yml
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
