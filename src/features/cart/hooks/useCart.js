@@ -14,8 +14,13 @@ function normalizeCartItem(menuItem, quantity) {
     fallbackImage: menuItem.fallbackImage,
     description: menuItem.description,
     note: menuItem.note,
+    isAvailable: menuItem.isAvailable !== false,
     quantity,
   };
+}
+
+function isOrderable(item) {
+  return Boolean(item?.id) && item.isAvailable !== false;
 }
 
 export function useCart() {
@@ -24,7 +29,7 @@ export function useCart() {
 
   const addItem = useCallback(
     (menuItem, quantity = 1) => {
-      if (!menuItem?.isAvailable) {
+      if (!isOrderable(menuItem)) {
         return false;
       }
 
@@ -37,7 +42,11 @@ export function useCart() {
 
         return currentItems.map((item) =>
           item.id === menuItem.id
-            ? { ...item, quantity: item.quantity + quantity }
+            ? {
+                ...item,
+                isAvailable: item.isAvailable !== false,
+                quantity: item.quantity + quantity,
+              }
             : item
         );
       });
@@ -48,10 +57,26 @@ export function useCart() {
   );
 
   const increaseItem = useCallback(
-    (menuItem) => {
-      addItem(menuItem, 1);
+    (cartItem) => {
+      if (!isOrderable(cartItem)) {
+        return false;
+      }
+
+      setItems((currentItems) =>
+        currentItems.map((item) =>
+          item.id === cartItem.id
+            ? {
+                ...item,
+                isAvailable: item.isAvailable !== false,
+                quantity: item.quantity + 1,
+              }
+            : item
+        )
+      );
+
+      return true;
     },
-    [addItem]
+    [setItems]
   );
 
   const decreaseItem = useCallback(
