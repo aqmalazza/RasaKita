@@ -1,17 +1,67 @@
 import { X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "./Button.jsx";
+
+const MODAL_TRANSITION_MS = 180;
 
 export default function Modal({
   children,
   footer,
   isOpen,
+  onExited,
   onClose,
   title,
   variant = "sheet",
 }) {
+  const [shouldRender, setShouldRender] = useState(isOpen);
+  const [isVisible, setIsVisible] = useState(false);
+  const [contentSnapshot, setContentSnapshot] = useState({
+    children,
+    footer,
+    title,
+  });
+  const onCloseRef = useRef(onClose);
+
   useEffect(() => {
-    if (!isOpen) {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setContentSnapshot({ children, footer, title });
+    }
+  }, [children, footer, isOpen, title]);
+
+  useEffect(() => {
+    let animationFrame;
+    let exitTimer;
+
+    if (isOpen) {
+      setShouldRender(true);
+      animationFrame = window.requestAnimationFrame(() => setIsVisible(true));
+
+      return () => {
+        window.cancelAnimationFrame(animationFrame);
+      };
+    }
+
+    if (!shouldRender) {
+      return undefined;
+    }
+
+    setIsVisible(false);
+    exitTimer = window.setTimeout(() => {
+      setShouldRender(false);
+      onExited?.();
+    }, MODAL_TRANSITION_MS);
+
+    return () => {
+      window.clearTimeout(exitTimer);
+    };
+  }, [isOpen, onExited, shouldRender]);
+
+  useEffect(() => {
+    if (!shouldRender) {
       return undefined;
     }
 
@@ -30,7 +80,7 @@ export default function Modal({
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
-        onClose?.();
+        onCloseRef.current?.();
       }
     };
 
@@ -43,24 +93,41 @@ export default function Modal({
       document.body.style.width = previousBodyStyle.width;
       window.scrollTo(0, scrollY);
     };
-  }, [isOpen, onClose]);
+  }, [shouldRender]);
 
-  if (!isOpen) {
+  if (!shouldRender) {
     return null;
   }
 
+  const displayedContent = isOpen
+    ? { children, footer, title }
+    : contentSnapshot;
+
   return (
-    <div className="modal-backdrop" role="presentation" onMouseDown={onClose}>
+    <div
+      className={[
+        "modal-backdrop",
+        isVisible ? "modal-backdrop--open" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      role="presentation"
+      onMouseDown={onClose}
+    >
       <section
         aria-modal="true"
-        className={["modal", variant === "center" ? "modal--center" : ""]
+        className={[
+          "modal",
+          variant === "center" ? "modal--center" : "",
+          isVisible ? "modal--open" : "",
+        ]
           .filter(Boolean)
           .join(" ")}
         onMouseDown={(event) => event.stopPropagation()}
         role="dialog"
       >
         <header className="modal__header">
-          <h2>{title}</h2>
+          <h2>{displayedContent.title}</h2>
           <Button
             aria-label="Tutup pop-up"
             className="button--icon"
@@ -70,8 +137,10 @@ export default function Modal({
             <X size={18} />
           </Button>
         </header>
-        <div className="modal__body">{children}</div>
-        {footer ? <footer className="modal__footer">{footer}</footer> : null}
+        <div className="modal__body">{displayedContent.children}</div>
+        {displayedContent.footer ? (
+          <footer className="modal__footer">{displayedContent.footer}</footer>
+        ) : null}
       </section>
     </div>
   );

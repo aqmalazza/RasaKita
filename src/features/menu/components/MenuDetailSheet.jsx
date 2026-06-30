@@ -9,17 +9,23 @@ import { formatCurrency } from "../../../lib/formatCurrency.js";
 
 export default function MenuDetailSheet({ menu, onAdd, onClose }) {
   const [quantity, setQuantity] = useState(1);
+  const [visibleMenu, setVisibleMenu] = useState(menu);
 
   useEffect(() => {
-    setQuantity(1);
-  }, [menu?.id]);
+    if (menu) {
+      setQuantity(1);
+      setVisibleMenu(menu);
+    }
+  }, [menu]);
 
-  if (!menu) {
+  if (!visibleMenu) {
     return null;
   }
 
+  const activeMenu = menu ?? visibleMenu;
+
   const handleAdd = () => {
-    onAdd(menu, quantity);
+    onAdd(activeMenu, quantity);
     onClose();
   };
 
@@ -33,33 +39,36 @@ export default function MenuDetailSheet({ menu, onAdd, onClose }) {
             onIncrease={() => setQuantity((value) => value + 1)}
             quantity={quantity}
           />
-          <Button disabled={!menu.isAvailable} onClick={handleAdd}>
+          <Button disabled={!activeMenu.isAvailable} onClick={handleAdd}>
             <ShoppingCart size={18} />
             Tambah
           </Button>
         </>
       }
       isOpen={Boolean(menu)}
+      onExited={() => setVisibleMenu(null)}
       onClose={onClose}
-      title={menu.name}
+      title={activeMenu.name}
       variant="center"
     >
       <div className="detail-stack">
         <div className="sheet-image">
           <OptimizedImage
-            alt={menu.name}
-            fallbackSrc={menu.fallbackImage || DEFAULT_MENU_IMAGE}
+            alt={activeMenu.name}
+            fallbackSrc={activeMenu.fallbackImage || DEFAULT_MENU_IMAGE}
             height={500}
             loading="lazy"
-            src={menu.optimizedImage || menu.image}
+            src={activeMenu.optimizedImage || activeMenu.image}
             width={800}
           />
         </div>
         <div className="summary-stack">
-          <p>{menu.description}</p>
-          {menu.note ? <p>{menu.note}</p> : null}
-          <strong className="price-text">{formatCurrency(menu.price)}</strong>
-          {!menu.isAvailable ? (
+          <p>{activeMenu.description}</p>
+          {activeMenu.note ? <p>{activeMenu.note}</p> : null}
+          <strong className="price-text">
+            {formatCurrency(activeMenu.price)}
+          </strong>
+          {!activeMenu.isAvailable ? (
             <span className="status-badge status-badge--rejected">
               Tidak tersedia
             </span>

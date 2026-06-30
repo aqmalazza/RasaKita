@@ -1,10 +1,12 @@
 import { MonitorCheck } from "lucide-react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import OptimizedImage from "../common/OptimizedImage.jsx";
 import RouteScrollReset from "../common/RouteScrollReset.jsx";
 import { brandData } from "../../data/brandData.js";
 
 export default function CashierLayout() {
+  const { pathname } = useLocation();
+
   return (
     <div className="cashier-shell">
       <RouteScrollReset />
@@ -28,7 +30,9 @@ export default function CashierLayout() {
         </div>
       </header>
       <main className="cashier-main">
-        <Outlet />
+        <div className="route-transition" key={pathname}>
+          <Outlet />
+        </div>
       </main>
     </div>
   );
