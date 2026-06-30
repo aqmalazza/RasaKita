@@ -1,6 +1,5 @@
 import { ClipboardList } from "lucide-react";
 import { Link } from "react-router-dom";
-import Button from "../../../components/common/Button.jsx";
 import PageHeader from "../../../components/common/PageHeader.jsx";
 import EmptyState from "../../../components/feedback/EmptyState.jsx";
 import CartItem from "../components/CartItem.jsx";
@@ -19,11 +18,7 @@ export default function CartPage() {
 
   return (
     <div className="page-stack">
-      <PageHeader
-        backTo="/"
-        description="Cek lagi pesanan sebelum mengisi informasi pelanggan."
-        title="Keranjang"
-      />
+      <PageHeader backTo="/" title="Keranjang" />
 
       {!items.length ? (
         <EmptyState

@@ -57,11 +57,7 @@ export default function PaymentPage() {
 
   return (
     <div className="page-stack">
-      <PageHeader
-        backTo="/order-info"
-        description="Selesaikan pembayaran untuk mengonfirmasi pesanan."
-        title="Pembayaran"
-      />
+      <PageHeader backTo="/order-info" title="Pembayaran" />
       <div className="payment-method-list">
         {paymentData.map((method) => (
           <PaymentMethodCard
