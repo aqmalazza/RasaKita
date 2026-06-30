@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Modal from "../../../components/common/Modal.jsx";
-import PageHeader from "../../../components/common/PageHeader.jsx";
 import { brandData } from "../../../data/brandData.js";
 import { categoryData } from "../../../data/categoryData.js";
 import { menuData } from "../../../data/menuData.js";
@@ -99,10 +98,6 @@ export default function MenuPage() {
   return (
     <div className="page-stack">
       <MenuHero brand={brandData} />
-      <PageHeader
-        description={brandData.tagline}
-        title={brandData.name}
-      />
       <CategoryTabs
         activeCategory={activeCategory}
         categories={categoryTabs}

@@ -1,6 +1,6 @@
-import { RefreshCw } from "lucide-react";
-import { useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { useMemo } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../../components/common/Button.jsx";
 import PageHeader from "../../../components/common/PageHeader.jsx";
 import EmptyState from "../../../components/feedback/EmptyState.jsx";
@@ -18,8 +18,8 @@ function formatDateTime(value) {
 
 export default function OrderStatusPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const initialOrderId = location.state?.orderId;
-  const [refreshKey, setRefreshKey] = useState(0);
 
   const order = useMemo(() => {
     if (initialOrderId) {
@@ -27,7 +27,12 @@ export default function OrderStatusPage() {
     }
 
     return orderStorage.getLatestOrder();
-  }, [initialOrderId, refreshKey]);
+  }, [initialOrderId]);
+
+  const handleBackToMenu = () => {
+    orderStorage.clearSessionData();
+    navigate("/", { replace: true });
+  };
 
   if (!order) {
     return (
@@ -48,10 +53,7 @@ export default function OrderStatusPage() {
 
   return (
     <div className="page-stack">
-      <PageHeader
-        backTo="/"
-        title="Status Pesanan"
-      />
+      <PageHeader title="Status Pesanan" />
       <section className="status-panel">
         <span className="status-panel__id">{order.id}</span>
         <StatusBadge status={order.orderStatus} />
@@ -112,9 +114,9 @@ export default function OrderStatusPage() {
           <strong>{formatCurrency(order.totalPrice)}</strong>
         </div>
       </section>
-      <Button fullWidth onClick={() => setRefreshKey((value) => value + 1)}>
-        <RefreshCw size={18} />
-        Muat Ulang Status
+      <Button fullWidth onClick={handleBackToMenu}>
+        <ArrowLeft size={18} />
+        Back to menu
       </Button>
     </div>
   );

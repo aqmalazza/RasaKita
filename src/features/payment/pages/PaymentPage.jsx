@@ -87,10 +87,7 @@ export default function PaymentPage() {
         title="Konfirmasi pembayaran"
         variant="center"
       >
-        <p>
-          Setelah pembayaran dikonfirmasi, pesanan akan disimpan dengan status
-          Pesanan Diterima.
-        </p>
+        <p>Setelah pembayaran dikonfirmasi, pesanan akan diantar ke meja anda</p>
       </Modal>
     </div>
   );
