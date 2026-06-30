@@ -97,8 +97,8 @@ export default function OrderInfoPage() {
         <div className="summary-stack">
           <p>
             Pesanan atas nama <strong>{form.customerName}</strong> untuk meja{" "}
-            <strong>{form.tableNumber}</strong> akan masuk ke halaman pembayaran
-            dummy.
+            <strong>{form.tableNumber}</strong> akan masuk ke halaman
+            pembayaran.
           </p>
         </div>
       </Modal>

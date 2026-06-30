@@ -53,7 +53,10 @@ export default function CashierOrderDetail({
           </div>
           <div className="summary-row">
             <span>Status pembayaran</span>
-            <strong>{PAYMENT_STATUS_LABEL[order.paymentStatus]}</strong>
+            <strong>
+              {PAYMENT_STATUS_LABEL[order.paymentStatus] ??
+                "Pembayaran Terkonfirmasi"}
+            </strong>
           </div>
         </div>
         <div className="summary-divider" />

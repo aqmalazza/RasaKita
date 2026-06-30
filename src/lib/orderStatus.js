@@ -11,9 +11,9 @@ export const ORDER_STATUS_LABEL = {
 };
 
 export const PAYMENT_STATUS = {
-  PAID_DUMMY: "paid_dummy",
+  PAID: "paid",
 };
 
 export const PAYMENT_STATUS_LABEL = {
-  [PAYMENT_STATUS.PAID_DUMMY]: "Pembayaran Dummy Terkonfirmasi",
+  [PAYMENT_STATUS.PAID]: "Pembayaran Terkonfirmasi",
 };

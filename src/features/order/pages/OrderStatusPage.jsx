@@ -43,7 +43,6 @@ export default function OrderStatusPage() {
     <div className="page-stack">
       <PageHeader
         backTo="/"
-        description="Status akan berubah setelah kasir menerima atau menolak pesanan."
         title="Status Pesanan"
       />
       <section className="status-panel">

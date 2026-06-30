@@ -2,7 +2,7 @@ import { CheckCircle2 } from "lucide-react";
 import Button from "../../../components/common/Button.jsx";
 import { formatCurrency } from "../../../lib/formatCurrency.js";
 
-export default function DummyPaymentBox({ onConfirm, totalPrice }) {
+export default function PaymentBox({ onConfirm, totalPrice }) {
   return (
     <section className="payment-box">
       <div className="payment-total-row">

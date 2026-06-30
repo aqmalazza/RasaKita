@@ -5,7 +5,7 @@ export default function MenuGrid({ menus, onAdd, onSelect }) {
   if (!menus.length) {
     return (
       <EmptyState
-        description="Kategori ini belum memiliki menu dummy."
+        description="Kategori ini belum memiliki menu."
         title="Menu belum tersedia"
       />
     );

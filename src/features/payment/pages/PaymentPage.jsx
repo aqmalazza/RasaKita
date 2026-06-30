@@ -8,7 +8,7 @@ import { generateOrderId } from "../../../lib/generateOrderId.js";
 import { ORDER_STATUS, PAYMENT_STATUS } from "../../../lib/orderStatus.js";
 import { useCart } from "../../cart/hooks/useCart.js";
 import { orderStorage } from "../../order/services/orderStorage.js";
-import DummyPaymentBox from "../components/DummyPaymentBox.jsx";
+import PaymentBox from "../components/PaymentBox.jsx";
 import PaymentMethodCard from "../components/PaymentMethodCard.jsx";
 
 export default function PaymentPage() {
@@ -35,8 +35,8 @@ export default function PaymentPage() {
       items,
       totalItems,
       totalPrice,
-      paymentStatus: PAYMENT_STATUS.PAID_DUMMY,
-      orderStatus: ORDER_STATUS.PENDING_CASHIER,
+      paymentStatus: PAYMENT_STATUS.PAID,
+      orderStatus: ORDER_STATUS.ACCEPTED,
       createdAt: timestamp,
       updatedAt: timestamp,
     };
@@ -52,7 +52,7 @@ export default function PaymentPage() {
     <div className="page-stack">
       <PageHeader
         backTo="/order-info"
-        description="Simulasi pembayaran sebelum pesanan masuk ke kasir."
+        description="Selesaikan pembayaran untuk mengonfirmasi pesanan."
         title="Pembayaran"
       />
       <div className="payment-method-list">
@@ -65,7 +65,7 @@ export default function PaymentPage() {
           />
         ))}
       </div>
-      <DummyPaymentBox
+      <PaymentBox
         onConfirm={() => setIsConfirmOpen(true)}
         totalPrice={totalPrice}
       />
@@ -84,8 +84,8 @@ export default function PaymentPage() {
         variant="center"
       >
         <p>
-          Setelah pembayaran dikonfirmasi, pesanan akan dikirim ke dashboard
-          kasir dengan status menunggu konfirmasi.
+          Setelah pembayaran dikonfirmasi, pesanan akan disimpan dengan status
+          Pesanan Diterima.
         </p>
       </Modal>
     </div>

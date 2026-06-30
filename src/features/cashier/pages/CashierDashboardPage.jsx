@@ -72,7 +72,7 @@ export default function CashierDashboardPage() {
   return (
     <div className="page-stack">
       <PageHeader
-        description="Kelola pesanan pelanggan yang sudah melewati pembayaran dummy."
+        description="Kelola pesanan pelanggan yang sudah melewati pembayaran."
         title="Pesanan Masuk"
       />
       <CashierStats stats={stats} />
@@ -82,8 +82,8 @@ export default function CashierDashboardPage() {
       </Button>
       {!orders.length ? (
         <EmptyState
-          description="Pesanan baru dengan status menunggu konfirmasi akan tampil di sini."
-          title="Belum ada pesanan pending"
+          description="Pesanan yang perlu ditinjau akan tampil di sini."
+          title="Belum ada pesanan masuk"
         />
       ) : (
         <div className="cashier-grid">
