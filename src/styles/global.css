@@ -33,6 +33,21 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+button,
+.button,
+.category-tab,
+.menu-card,
+.menu-card *,
+.floating-cart,
+.quantity-control,
+.status-badge,
+.price-text {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  user-select: none;
+}
+
 a {
   color: var(--color-primary);
   text-decoration: underline;
@@ -389,11 +404,17 @@ img {
   box-shadow: var(--shadow-1);
   overflow: hidden;
   text-align: left;
-  transition: box-shadow 160ms ease;
+  touch-action: manipulation;
 }
 
-.menu-card:hover {
-  box-shadow: var(--shadow-2);
+@media (hover: hover) {
+  .menu-card {
+    transition: box-shadow 160ms ease;
+  }
+
+  .menu-card:hover {
+    box-shadow: var(--shadow-2);
+  }
 }
 
 .menu-card__image {
@@ -404,6 +425,7 @@ img {
   background: #f5f5f5;
   cursor: pointer;
   touch-action: manipulation;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -442,6 +464,7 @@ img {
   cursor: pointer;
   text-align: left;
   touch-action: manipulation;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -473,6 +496,8 @@ img {
 .price-text {
   color: var(--color-heading);
   font-weight: 600;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .floating-cart {
