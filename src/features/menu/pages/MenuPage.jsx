@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Modal from "../../../components/common/Modal.jsx";
 import PageHeader from "../../../components/common/PageHeader.jsx";
 import { brandData } from "../../../data/brandData.js";
@@ -14,25 +14,75 @@ export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [notice, setNotice] = useState(null);
+  const sectionRefs = useRef(new Map());
   const { addItem, totalItems, totalPrice } = useCart();
   const categoryTabs = useMemo(
     () => [{ id: "all", name: "Semua" }, ...categoryData],
     []
   );
 
-  const filteredMenus = useMemo(() => {
-    if (activeCategory === "all") {
-      return menuData;
+  const menuSections = useMemo(
+    () =>
+      categoryData.map((category) => ({
+        category,
+        menus: menuData.filter((menu) => menu.category === category.name),
+      })),
+    []
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (firstEntry, secondEntry) =>
+              firstEntry.boundingClientRect.top -
+              secondEntry.boundingClientRect.top
+          )[0];
+
+        const categoryId = visibleEntry?.target.dataset.categoryId;
+
+        if (categoryId) {
+          setActiveCategory(categoryId);
+        }
+      },
+      {
+        rootMargin: "-112px 0px -58% 0px",
+        threshold: 0.01,
+      }
+    );
+
+    sectionRefs.current.forEach((node) => {
+      if (node) {
+        observer.observe(node);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [menuSections]);
+
+  const setSectionRef = (categoryId, node) => {
+    if (!node) {
+      sectionRefs.current.delete(categoryId);
+      return;
     }
 
-    const selectedCategory = categoryData.find(
-      (category) => category.id === activeCategory
-    );
+    sectionRefs.current.set(categoryId, node);
+  };
 
-    return menuData.filter(
-      (menu) => menu.category === selectedCategory?.name
-    );
-  }, [activeCategory]);
+  const handleCategoryChange = (categoryId) => {
+    setActiveCategory(categoryId);
+
+    if (categoryId === "all") {
+      window.scrollTo({ behavior: "smooth", top: 0 });
+      return;
+    }
+
+    sectionRefs.current
+      .get(categoryId)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const handleAdd = (menu, quantity = 1) => {
     const isAdded = addItem(menu, quantity);
@@ -54,12 +104,13 @@ export default function MenuPage() {
       <CategoryTabs
         activeCategory={activeCategory}
         categories={categoryTabs}
-        onChange={setActiveCategory}
+        onChange={handleCategoryChange}
       />
       <MenuGrid
-        menus={filteredMenus}
         onAdd={handleAdd}
         onSelect={setSelectedMenu}
+        sections={menuSections}
+        setSectionRef={setSectionRef}
       />
       <MenuDetailSheet
         menu={selectedMenu}

@@ -17,6 +17,9 @@ export default function PaymentPage() {
   const [selectedMethod, setSelectedMethod] = useState(paymentData[0].id);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const checkoutDraft = orderStorage.getCheckoutDraft();
+  const selectedPaymentMethod = paymentData.find(
+    (method) => method.id === selectedMethod
+  );
 
   if (!items.length) {
     return <Navigate replace to="/cart" />;
@@ -35,6 +38,7 @@ export default function PaymentPage() {
       items,
       totalItems,
       totalPrice,
+      paymentMethod: selectedPaymentMethod?.name ?? "Pembayaran",
       paymentStatus: PAYMENT_STATUS.PAID,
       orderStatus: ORDER_STATUS.ACCEPTED,
       createdAt: timestamp,
@@ -75,7 +79,7 @@ export default function PaymentPage() {
             <Button onClick={() => setIsConfirmOpen(false)} variant="secondary">
               Batal
             </Button>
-            <Button onClick={handleCreateOrder}>Ya, Simpan Pesanan</Button>
+            <Button onClick={handleCreateOrder}>Konfirmasi Pembayaran</Button>
           </>
         }
         isOpen={isConfirmOpen}

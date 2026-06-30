@@ -1,4 +1,16 @@
+import { useEffect, useRef } from "react";
+
 export default function CategoryTabs({ activeCategory, categories, onChange }) {
+  const activeButtonRef = useRef(null);
+
+  useEffect(() => {
+    activeButtonRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [activeCategory]);
+
   return (
     <div aria-label="Kategori menu" className="category-tabs" role="tablist">
       {categories.map((category) => (
@@ -12,6 +24,7 @@ export default function CategoryTabs({ activeCategory, categories, onChange }) {
             .join(" ")}
           key={category.id}
           onClick={() => onChange(category.id)}
+          ref={activeCategory === category.id ? activeButtonRef : null}
           role="tab"
           type="button"
         >

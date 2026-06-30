@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -271,10 +272,15 @@ img {
 }
 
 .category-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 12;
   display: flex;
   gap: var(--space-1);
   overflow-x: auto;
-  padding-bottom: 2px;
+  margin: calc(var(--space-1) * -1) 0 0;
+  padding: var(--space-1) 0;
+  background: var(--color-surface);
   scrollbar-width: none;
 }
 
@@ -303,6 +309,36 @@ img {
 .menu-grid {
   display: grid;
   gap: var(--space-2);
+}
+
+.menu-sections {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.menu-section {
+  display: grid;
+  gap: var(--space-2);
+  scroll-margin-top: 72px;
+}
+
+.menu-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.menu-section__header h2 {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.menu-section__header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
 }
 
 .menu-card {
@@ -605,6 +641,7 @@ img {
 .summary-card,
 .empty-state,
 .status-panel,
+.receipt-card,
 .payment-box,
 .payment-method-card,
 .stats-card,
@@ -618,6 +655,7 @@ img {
 .summary-card,
 .empty-state,
 .status-panel,
+.receipt-card,
 .payment-box,
 .stats-card,
 .cashier-card {
@@ -692,6 +730,49 @@ img {
 .status-panel {
   display: grid;
   gap: var(--space-2);
+}
+
+.receipt-card {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.receipt-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.receipt-card__header h2 {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.receipt-card__header span,
+.receipt-item span {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.receipt-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.receipt-item div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.receipt-item strong {
+  color: var(--color-heading);
 }
 
 .status-panel__id {

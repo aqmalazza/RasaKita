@@ -1,7 +1,12 @@
 export const paymentData = [
   {
-    id: "payment-counter",
-    name: "Pembayaran",
-    description: "Konfirmasi pembayaran untuk menyimpan pesanan.",
+    id: "qris",
+    name: "QRIS",
+    description: "Bayar menggunakan QRIS.",
+  },
+  {
+    id: "tunai",
+    name: "Tunai",
+    description: "Bayar langsung di kasir.",
   },
 ];

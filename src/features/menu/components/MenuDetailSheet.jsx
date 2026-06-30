@@ -42,6 +42,7 @@ export default function MenuDetailSheet({ menu, onAdd, onClose }) {
       isOpen={Boolean(menu)}
       onClose={onClose}
       title={menu.name}
+      variant="center"
     >
       <div className="detail-stack">
         <div className="sheet-image">

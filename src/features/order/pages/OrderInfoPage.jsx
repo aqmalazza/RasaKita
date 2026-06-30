@@ -62,7 +62,6 @@ export default function OrderInfoPage() {
     <div className="page-stack">
       <PageHeader
         backTo="/cart"
-        description="Isi data pelanggan lalu cek kembali ringkasan pesanan."
         title="Informasi Pesanan"
       />
       <CustomerInfoForm

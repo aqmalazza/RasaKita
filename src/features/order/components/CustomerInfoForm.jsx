@@ -14,7 +14,7 @@ export default function CustomerInfoForm({
         id="customerName"
         label="Nama pelanggan"
         onChange={(event) => onChange("customerName", event.target.value)}
-        placeholder="Viqia"
+        placeholder="Contoh: Viqia"
         required
         value={form.customerName}
       />

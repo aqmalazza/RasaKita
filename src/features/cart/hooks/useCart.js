@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useLocalStorage } from "../../../hooks/useLocalStorage.js";
 import { calculateCartTotal } from "../../../lib/calculateCartTotal.js";
-
-const CART_STORAGE_KEY = "food-menu-cart";
+import { STORAGE_KEYS } from "../../../lib/storageKeys.js";
 
 function normalizeCartItem(menuItem, quantity) {
   return {
@@ -20,7 +19,7 @@ function normalizeCartItem(menuItem, quantity) {
 }
 
 export function useCart() {
-  const [items, setItems] = useLocalStorage(CART_STORAGE_KEY, []);
+  const [items, setItems] = useLocalStorage(STORAGE_KEYS.cart, []);
   const totals = useMemo(() => calculateCartTotal(items), [items]);
 
   const addItem = useCallback(
